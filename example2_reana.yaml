@@ -1,0 +1,23 @@
+version: 0.9.3
+inputs:
+  parameters:
+    input: example2_inputs.yaml
+  files:
+    - example2_Snakefile
+    - example2_inputs.yaml
+    - datasets.sh
+workflow:
+  type: snakemake
+  file: example2_Snakefile
+  resources:
+    cvmfs:
+      - cms.cern.ch
+      - grid.cern.ch
+workspace:
+  retention_days:
+    output/*: 30
+outputs:
+  directories:
+    - output/
+
+

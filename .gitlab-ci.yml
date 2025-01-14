@@ -1,0 +1,45 @@
+stages:
+- build
+
+include:
+  - project: 'ci-tools/container-image-ci-templates'
+    file:
+      - 'kaniko-image.gitlab-ci.yml'
+
+variables:
+  CONTEXT_DIR: ""
+  DOCKER_FILE_NAME: "Dockerfile"
+  GIT_SUBMODULE_STRATEGY: recursive
+  PUSH_IMAGE: "true"
+  ACCELERATED_IMAGE: "false"
+  BUILD_ARGS: ""
+  SCAN_IMAGE: "false"
+  REGISTRY_IMAGE_PATH: ${CI_REGISTRY_IMAGE}
+  CMS_PATH: /cvmfs/cms.cern.ch
+    #CMSSW_RELEASE: CMSSW_10_6_8_patch1
+    #SCRAM_ARCH: slc7_amd64_gcc700
+  CMSSW_RELEASE: CMSSW_13_0_10
+  SCRAM_ARCH: el9_amd64_gcc11
+  EXTRA_TAGS: "latest"
+
+
+    #cmssw_compile:
+    #stage: build
+    #tags:
+    #- cvmfs
+    #image: gitlab-registry.cern.ch/cms-cloud/cmssw-docker/cc7-cms
+    #script:
+    #- set +u && source ${CMS_PATH}/cmsset_default.sh; set -u
+    #- scramv1 project CMSSW ${CMSSW_RELEASE}
+    #- cd ${CMSSW_RELEASE}/src
+    #- eval `scramv1 runtime -sh`
+    #- mkdir ${CMSSW_BASE}/src/AnalysisCode
+    #- cp -r "${CI_PROJECT_DIR}/ZPeakAnalysis" "${CMSSW_BASE}/src/AnalysisCode/"
+    #- scram b
+
+cmssw_add_to_image:
+  extends: .build_kaniko
+  stage: build
+  tags:
+    - cvmfs
+

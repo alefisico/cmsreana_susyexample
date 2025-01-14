@@ -1,0 +1,22 @@
+version: 0.9.3
+inputs:
+  directories:
+    - SUSY/
+  parameters:
+    input: inputs.yaml
+  files:
+    - Snakefile
+workflow:
+  type: snakemake
+  file: Snakefile
+  resources:
+    cvmfs:
+      - cms.cern.ch
+workspace:
+  retention_days:
+    output/*: 30
+outputs:
+  directories:
+    - output/
+
+

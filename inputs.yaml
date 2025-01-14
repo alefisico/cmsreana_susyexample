@@ -1,0 +1,2 @@
+nanoaod_file: SUSY/DY.root
+output_file: output/datacards/DY_postEE.root
